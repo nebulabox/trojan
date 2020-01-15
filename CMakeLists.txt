@@ -1,11 +1,16 @@
-cmake_minimum_required(VERSION 3.7.2)
+cmake_minimum_required(VERSION 3.10)
 project(trojan)
+
+set(CMAKE_EXE_LINKER_FLAGS "-static-libstdc++")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
-set(CMAKE_CXX_STANDARD 11)
+
+set (CMAKE_C_STANDARD 11)
+set (CMAKE_CXX_STANDARD 17)
+
 if(MSVC)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 else()
@@ -36,6 +41,8 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 target_link_libraries(trojan ${CMAKE_THREAD_LIBS_INIT})
 
+set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_STATIC_RUNTIME ON)
 find_package(Boost 1.66.0 REQUIRED COMPONENTS system program_options)
 include_directories(${Boost_INCLUDE_DIR})
 target_link_libraries(trojan ${Boost_LIBRARIES})
@@ -43,6 +50,7 @@ if(MSVC)
     add_definitions(-DBOOST_DATE_TIME_NO_LIB)
 endif()
 
+set(OPENSSL_USE_STATIC_LIBS ON)
 find_package(OpenSSL 1.1.0 REQUIRED)
 include_directories(${OPENSSL_INCLUDE_DIR})
 target_link_libraries(trojan ${OPENSSL_LIBRARIES})
