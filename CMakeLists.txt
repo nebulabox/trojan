@@ -92,6 +92,8 @@ if(CMAKE_SYSTEM_NAME STREQUAL Linux)
     if(ENABLE_REUSE_PORT)
         add_definitions(-DENABLE_REUSE_PORT)
     endif()
+
+    target_link_libraries(trojan dl)
 endif()
 
 if(APPLE)
