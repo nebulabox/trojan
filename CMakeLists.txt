@@ -15,7 +15,13 @@ else()
     add_definitions(-Wall -Wextra)
 endif()
 
+file(GLOB_RECURSE SRC_HEADER_LIST
+	"src/*.hpp" 
+	"src/*.h"
+)
+
 add_executable(trojan
+    ${SRC_HEADER_LIST}
     src/core/authenticator.cpp
     src/core/config.cpp
     src/core/log.cpp
